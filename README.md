@@ -124,7 +124,7 @@ A segmentação por risco permite direcionar estratégias distintas para diferen
 ## 📁 Estrutura do Projeto
 
 ```
-📦 case-inadimplencia
+📦 modelo-inadimplencia
  ┣ 📂 data
  ┣ 📂 notebooks
  ┣ 📄 requirements.txt
