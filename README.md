@@ -1,159 +1,243 @@
-# 📊 Case de Data Science — Predição de Inadimplência
+# 📊 Modelo de Predição de Inadimplência
 
-## 🎯 Objetivo
+## 📌 Visão Geral
 
-Desenvolver um modelo de machine learning capaz de prever a probabilidade de inadimplência de clientes, permitindo priorização de ações de cobrança e otimização de recursos operacionais.
+Projeto de Ciência de Dados desenvolvido para prever a probabilidade de inadimplência de clientes utilizando Machine Learning.
 
----
-
-## 🧠 Abordagem
-
-O projeto foi estruturado seguindo um pipeline completo de ciência de dados:
-
-1. **Definição da target**
-
-   * Inadimplência definida como atraso ≥ 5 dias
-   * Problema tratado como classificação binária
-
-2. **Construção da base analítica**
-
-   * Integração de múltiplas fontes (cadastral, info e pagamentos)
-   * Garantia de consistência temporal e integridade dos dados
-
-3. **Feature Engineering**
-
-   * Criação de variáveis comportamentais (lags, rolling, histórico)
-   * Features de contexto (tempo de relacionamento, sazonalidade)
-   * Uso rigoroso de `shift(1)` para evitar data leakage
-
-4. **Split temporal**
-
-   * Separação treino/validação respeitando ordem temporal
-   * Simulação de cenário real de produção
-
-5. **Modelagem**
-
-   * Algoritmo: LightGBM
-   * Tratamento de desbalanceamento com `scale_pos_weight`
-   * Early stopping para evitar overfitting
-
-6. **Avaliação**
-
-   * Métricas utilizadas:
-
-     * AUC-ROC
-     * KS
-     * Average Precision
-     * Log Loss
-   * Análises complementares:
-
-     * Curva ROC e Precision-Recall
-     * Gains Chart (priorização de risco)
-     * Matriz de confusão
-
-7. **Calibração de probabilidades**
-
-   * Aplicação de Platt Scaling (sigmoid)
-   * Validação com Log Loss e reliability curve
-   * Uso condicionado à melhoria da métrica
-
-8. **Regras de negócio**
-
-   * Segmentação em níveis de risco:
-
-     * Baixo risco
-     * Médio risco
-     * Alto risco
-   * Permite aplicação prática do modelo em estratégias de cobrança
-
-9. **Validações finais**
-
-   * Sanity checks do modelo (range, NaN, consistência, distribuição)
-   * Garantia de robustez antes da submissão
-
-10. **Submissão**
-
-* Geração de probabilidades para base de teste
-* Exportação em formato CSV
+A solução combina engenharia de atributos comportamentais, modelagem preditiva com LightGBM, calibração de probabilidades e um dashboard interativo em Streamlit para apoio à tomada de decisão.
 
 ---
 
-## 🚀 Resultados
+## 🎯 Objetivo de Negócio
 
-O modelo demonstrou boa capacidade de separação e priorização de risco:
-
-* Identificação eficiente de clientes inadimplentes
-* Capacidade de concentrar risco nos primeiros percentis (Gains)
-* Probabilidades calibradas para uso em decisão
-
----
-
-## 💼 Aplicação de Negócio
-
-O modelo pode ser utilizado para:
+Antecipar clientes com maior probabilidade de inadimplência para:
 
 * Priorizar ações de cobrança
-* Reduzir custo operacional
-* Aumentar taxa de recuperação
-* Apoiar decisões de crédito
-
-A segmentação por risco permite direcionar estratégias distintas para diferentes perfis de cliente.
+* Reduzir custos operacionais
+* Melhorar recuperação de crédito
+* Apoiar decisões de risco
 
 ---
 
-## ⚠️ Cuidados Técnicos
+## 🏗️ Arquitetura da Solução
 
-* Prevenção rigorosa de **data leakage**
-* Uso de **split temporal**
-* Consistência total entre treino e teste
-* Interpretação correta das métricas
-* Separação entre **ranking e calibração**
+```text
+Bases Brutas
+      │
+      ▼
+Integração dos Dados
+      │
+      ▼
+Feature Engineering
+      │
+      ▼
+Split Temporal
+      │
+      ▼
+LightGBM
+      │
+      ▼
+Calibração de Probabilidades
+      │
+      ▼
+Segmentação de Risco
+      │
+      ▼
+Dashboard Streamlit
+```
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🔧 Engenharia de Features
 
-* Python 3.10
-* pandas, numpy
-* scikit-learn
+### Variáveis Comportamentais
+
+* target_lag_1
+* target_lag_2
+* target_lag_3
+* inad_ult_3
+* atraso_ult_3
+* atraso_ult_6
+* taxa_hist_inad
+* atraso_hist_medio
+* n_cobrancas_hist
+* valor_medio_cliente
+
+### Variáveis de Contexto
+
+* tempo_cliente
+* dias_prazo_cobranca
+* mes_safra
+* trimestre_safra
+* flag_cliente_novo
+
+### Cuidados contra Data Leakage
+
+Todas as variáveis históricas utilizam:
+
+```python
+shift(1)
+```
+
+Garantindo que apenas informações disponíveis antes da cobrança sejam utilizadas.
+
+---
+
+## 🤖 Modelo
+
+### Algoritmo
+
+* LightGBM Classifier
+
+### Estratégias Aplicadas
+
+* Split temporal
+* Scale Pos Weight
+* Early Stopping
+* Calibração via Platt Scaling (Sigmoid)
+
+---
+
+## 📈 Avaliação
+
+Métricas utilizadas:
+
+* AUC-ROC
+* KS Statistic
+* Average Precision
+* Log Loss
+
+Análises complementares:
+
+* Curva ROC
+* Precision-Recall Curve
+* Gains Chart
+* Matriz de Confusão
+* Reliability Diagram
+
+### Calibração
+
+A calibração foi aplicada apenas após validação da melhoria do Log Loss.
+
+Exemplo:
+
+| Métrica  | Antes  | Depois |
+| -------- | ------ | ------ |
+| Log Loss | 0.1887 | 0.1194 |
+
+Resultado: Probabilidades calibradas adotadas para produção.
+
+---
+
+## 🚦 Segmentação de Risco
+
+Os clientes são classificados em:
+
+| Faixa       | Descrição                            |
+| ----------- | ------------------------------------ |
+| Baixo Risco | Baixa probabilidade de inadimplência |
+| Médio Risco | Atenção preventiva                   |
+| Alto Risco  | Prioridade máxima de cobrança        |
+
+---
+
+## 📊 Dashboard
+
+O projeto inclui dashboard interativo desenvolvido em Streamlit.
+
+Funcionalidades:
+
+* Ranking de clientes por risco
+* Distribuição de probabilidades
+* Segmentação de risco
+* Métricas consolidadas
+* Consulta individual de clientes
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```text
+Credit_Model_Teste/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+│
+├── artefatos/
+│   ├── model_final.pkl
+│   ├── train_medians.pkl
+│   ├── features.pkl
+│   ├── cat_cols.pkl
+│   └── cutoff.pkl
+│
+├── data/
+│   ├── base_pagamentos_desenvolvimento.csv
+│   ├── base_pagamentos_teste.csv
+│   ├── base_info.csv
+│   └── base_cadastral.csv
+│
+├── notebooks/
+│   ├── eda.ipynb
+│   ├── feature_engineering.ipynb
+│   └── train_lgbm.ipynb
+│
+└── src/
+    ├── features.py
+    ├── predict.py
+    └── train.py
+```
+
+---
+
+## 🛠️ Tecnologias
+
+* Python 3.11.15
+* Pandas
+* NumPy
+* Scikit-Learn
 * LightGBM
-* matplotlib, seaborn
-
----
-
-## 📁 Estrutura do Projeto
-
-```
-📦 modelo-inadimplencia
- ┣ 📂 data
- ┣ 📂 notebooks
- ┣ 📄 requirements.txt
- ┣ 📄 submissao_case.csv
- ┗ 📄 README.md
-```
+* SciPy
+* Matplotlib
+* Seaborn
+* Streamlit
+* Joblib
 
 ---
 
 ## ▶️ Como Executar
 
+### 1. Criar ambiente
+
 ```bash
-# criar ambiente
-conda create -n case_ds python=3.10 -y
-conda activate case_ds
+conda create -n credit_model python=3.11.15 -y
+conda activate credit_model
+```
 
-# instalar dependências
+### 2. Instalar dependências
+
+```bash
 pip install -r requirements.txt
+```
 
-# rodar notebook
-jupyter notebook
+### 3. Executar dashboard
+
+```bash
+streamlit run app.py
 ```
 
 ---
 
-## 📌 Conclusão
+## 📌 Resultados
 
-O projeto entrega um pipeline completo de modelagem de crédito, desde a construção das variáveis até a aplicação prática em regras de negócio.
+O modelo demonstrou forte capacidade de priorização de risco, permitindo concentrar ações de cobrança nos clientes com maior probabilidade de inadimplência.
 
-A solução é robusta, interpretável e pronta para uso em cenários reais de decisão.
+A calibração das probabilidades melhorou significativamente o Log Loss, tornando as previsões mais confiáveis para uso operacional.
 
 ---
+
+## 👨‍💻 Autor
+
+Jonathas de Oliveira
+
+Projeto desenvolvido como estudo prático de Ciência de Dados aplicado ao contexto de risco de crédito e inadimplência.
