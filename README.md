@@ -158,7 +158,7 @@ Funcionalidades:
 ## 🗂️ Estrutura do Projeto
 
 ```text
-Credit_Model_Teste/
+Credit_Model/
 │
 ├── app.py
 ├── requirements.txt
