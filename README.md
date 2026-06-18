@@ -159,34 +159,57 @@ Funcionalidades:
 
 ```text
 Credit_Model/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-│
-├── artefatos/
-│   ├── model_final.pkl
-│   ├── train_medians.pkl
-│   ├── features.pkl
-│   ├── cat_cols.pkl
-│   └── cutoff.pkl
-│
-├── data/
-│   ├── base_pagamentos_desenvolvimento.csv
-│   ├── base_pagamentos_teste.csv
-│   ├── base_info.csv
-│   └── base_cadastral.csv
-│
-├── notebooks/
-│   ├── eda.ipynb
-│   ├── feature_engineering.ipynb
-│   └── train_lgbm.ipynb
-│
-└── src/
-    ├── features.py
-    ├── predict.py
-    └── train.py
-```
+C:.
+│   .gitignore
+│   app.py
+│   LICENSE
+│   README.md
+│   requirements.txt
+│   
+├───.ipynb_checkpoints
+├───artefatos
+│       cat_cols.pkl
+│       cutoff.pkl
+│       features.pkl
+│       model_final.pkl
+│       model_params.pkl
+│       submissao_case.csv
+│       train_medians.pkl
+│       
+├───data
+│   │   base_cadastral.csv
+│   │   base_info.csv
+│   │   base_pagamentos_desenvolvimento.csv
+│   │   base_pagamentos_teste.csv
+│   │   
+│   └───.ipynb_checkpoints
+│           base_info-checkpoint.csv
+│           base_pagamentos_desenvolvimento-checkpoint.csv
+│           base_pagamentos_teste-checkpoint.csv
+│           
+├───imagens
+│       confusion_matrix.png
+│       dashboard.png
+│       feature_importance.png
+│       ks_curve.png
+│       roc_curve.png
+│       
+├───notebooks
+│   │   eda.ipynb
+│   │   feature_engineering.ipynb
+│   │   train_lgbm.ipynb
+│   │   
+│   └───.ipynb_checkpoints
+│           Credit_Model-checkpoint.ipynb
+│           submissao_case-checkpoint.csv
+│           
+└───src
+    │   features.py
+    │   predict.py
+    │   train.py
+    │   
+
+
 
 ---
 
@@ -241,27 +264,27 @@ A calibração das probabilidades melhorou significativamente o Log Loss, tornan
 ### 📈 Dashboard de Performance Geral
 
 O dashboard consolida as principais métricas do modelo, permitindo uma visão geral do desempenho em classificação de risco de crédito.
-![Dashboard](images/dashboard.png)
+![Dashboard](imagens/dashboard.png)
 
 ### 📉 Curva ROC
 
 A curva ROC avalia a capacidade do modelo em separar classes positivas e negativas.
 Quanto mais próxima do canto superior esquerdo, melhor o desempenho.
-![ROC Curve](images/roc_curve.png)
+![ROC Curve](imagens/roc_curve.png)
 
 
 ### 📊 KS Statistic (Kolmogorov-Smirnov)
 
 A métrica KS mede a maior diferença entre as distribuições de clientes bons e maus pagadores.
 É amplamente utilizada em modelos de crédito para avaliar poder discriminatório.
-![KS](images/ks_curve.png)
+![KS](imagens/ks_curve.png)
 
 
 ### 🧠 Feature Importance
 
 Indica quais variáveis mais influenciam o modelo na decisão de risco de crédito.
 Ajuda a interpretar o comportamento do modelo e validar coerência de negócio.
-![Feature Importance](images/feature_importance.png)
+![Feature Importance](imagens/feature_importance.png)
 
 ### 🔀 Matriz de Confusão
 
@@ -271,7 +294,7 @@ Verdadeiros positivos (TP)
 Verdadeiros negativos (TN)
 Falsos positivos (FP)
 Falsos negativos (FN)
-![Confusion Matrix](images/confusion_matrix.png)
+![Confusion Matrix](imagens/confusion_matrix.png)
 
 
 Permite avaliar o impacto de erros no contexto de crédito.
