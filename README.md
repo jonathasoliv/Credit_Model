@@ -230,11 +230,51 @@ streamlit run app.py
 
 ## 📌 Resultados
 
-O modelo demonstrou forte capacidade de priorização de risco, permitindo concentrar ações de cobrança nos clientes com maior probabilidade de inadimplência.
+O modelo apresentou boa capacidade de priorização de risco, permitindo concentrar ações de cobrança nos clientes com maior probabilidade de inadimplência, reduzindo custo operacional e aumentando eficiência da régua de cobrança.
 
 A calibração das probabilidades melhorou significativamente o Log Loss, tornando as previsões mais confiáveis para uso operacional.
 
 ---
+
+## 📊 Resultados do Modelo
+
+### 📈 Dashboard de Performance Geral
+
+O dashboard consolida as principais métricas do modelo, permitindo uma visão geral do desempenho em classificação de risco de crédito.
+![Dashboard](images/dashboard.png)
+
+### 📉 Curva ROC
+
+A curva ROC avalia a capacidade do modelo em separar classes positivas e negativas.
+Quanto mais próxima do canto superior esquerdo, melhor o desempenho.
+![ROC Curve](images/roc_curve.png)
+
+
+### 📊 KS Statistic (Kolmogorov-Smirnov)
+
+A métrica KS mede a maior diferença entre as distribuições de clientes bons e maus pagadores.
+É amplamente utilizada em modelos de crédito para avaliar poder discriminatório.
+![KS](images/ks_curve.png)
+
+
+### 🧠 Feature Importance
+
+Indica quais variáveis mais influenciam o modelo na decisão de risco de crédito.
+Ajuda a interpretar o comportamento do modelo e validar coerência de negócio.
+![Feature Importance](images/feature_importance.png)
+
+### 🔀 Matriz de Confusão
+
+Mostra a performance do modelo em termos de acertos e erros:
+
+Verdadeiros positivos (TP)
+Verdadeiros negativos (TN)
+Falsos positivos (FP)
+Falsos negativos (FN)
+![Confusion Matrix](images/confusion_matrix.png)
+
+
+Permite avaliar o impacto de erros no contexto de crédito.
 
 ## 👨‍💻 Autor
 
