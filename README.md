@@ -264,12 +264,14 @@ A calibração das probabilidades melhorou significativamente o Log Loss, tornan
 ### 📈 Dashboard de Performance Geral
 
 O dashboard consolida as principais métricas do modelo, permitindo uma visão geral do desempenho em classificação de risco de crédito.
+
 ![Dashboard](imagens/dashboard.png)
 
 ### 📉 Curva ROC
 
 A curva ROC avalia a capacidade do modelo em separar classes positivas e negativas.
 Quanto mais próxima do canto superior esquerdo, melhor o desempenho.
+
 ![ROC Curve](imagens/roc_curve.png)
 
 
@@ -277,6 +279,7 @@ Quanto mais próxima do canto superior esquerdo, melhor o desempenho.
 
 A métrica KS mede a maior diferença entre as distribuições de clientes bons e maus pagadores.
 É amplamente utilizada em modelos de crédito para avaliar poder discriminatório.
+
 ![KS](imagens/ks_curve.png)
 
 
@@ -284,6 +287,7 @@ A métrica KS mede a maior diferença entre as distribuições de clientes bons 
 
 Indica quais variáveis mais influenciam o modelo na decisão de risco de crédito.
 Ajuda a interpretar o comportamento do modelo e validar coerência de negócio.
+
 ![Feature Importance](imagens/feature_importance.png)
 
 ### 🔀 Matriz de Confusão
@@ -294,10 +298,12 @@ Verdadeiros positivos (TP)
 Verdadeiros negativos (TN)
 Falsos positivos (FP)
 Falsos negativos (FN)
-![Confusion Matrix](imagens/confusion_matrix.png)
 
 
 Permite avaliar o impacto de erros no contexto de crédito.
+
+![Confusion Matrix](imagens/confusion_matrix.png)
+
 
 ## 👨‍💻 Autor
 
